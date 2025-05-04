@@ -18,9 +18,11 @@ enum Status {
 }
 
 model Categories {
-  id        Int      @id @default(autoincrement())
-  name      String
-  News      News[]
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  News       News[]
+  StaticNews StaticNews[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   userId    String   @map("user_id")
@@ -77,6 +79,20 @@ model Images {
 }
 
 // Viewer
+
+model StaticNews {
+  id         Int        @default(autoincrement())
+  url        String     @id @unique
+  title      String
+  quote      String?
+  Category   Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoryId Int        @map("category_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("st_news")
+}
 
 model StaticContents {
   title           String @id @unique
