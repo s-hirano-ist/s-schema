@@ -19,7 +19,7 @@ enum Status {
 
 model Categories {
   id         Int          @id @default(autoincrement())
-  name       String       @unique
+  name       String
   News       News[]
   StaticNews StaticNews[]
 
