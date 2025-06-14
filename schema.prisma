@@ -106,9 +106,21 @@ model StaticContents {
 }
 
 model StaticBooks {
-  title           String @id @unique
+  ISBN  String @id @unique @map("isbn")
+  title String
+
+  googleTitle       String   @map("google_title")
+  googleSubTitle    String   @map("google_subtitle")
+  googleAuthors     String[] @map("google_authors")
+  googleDescription String   @map("google_description")
+  googleImgSrc      String   @map("google_img_src")
+  googleHref        String   @map("google_href")
+
   markdown        String
   uint8ArrayImage Bytes // only a few KBs so not much performance loss
+
+  rating Int? // 1-5
+  tags   String[] @default([])
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
