@@ -81,10 +81,15 @@ model Images {
 // Viewer
 
 model StaticNews {
-  id         Int        @default(autoincrement())
-  url        String     @id @unique
-  title      String
-  quote      String?
+  id    Int     @default(autoincrement())
+  url   String  @id @unique
+  title String
+  quote String?
+
+  ogImageUrl    String? @map("og_image_url")
+  ogTitle       String? @map("og_title")
+  ogDescription String? @map("og_description")
+
   Category   Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   categoryId Int        @map("category_id")
 
