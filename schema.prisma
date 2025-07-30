@@ -121,8 +121,7 @@ model StaticBooks {
   googleImgSrc      String   @map("google_img_src")
   googleHref        String   @map("google_href")
 
-  markdown        String
-  uint8ArrayImage Bytes // only a few KBs so not much performance loss
+  markdown String
 
   rating Int? // 1-5
   tags   String[] @default([])
