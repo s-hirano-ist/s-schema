@@ -18,10 +18,10 @@ enum Status {
 }
 
 model Categories {
-  id         Int          @id @default(autoincrement())
-  name       String
-  News       News[]
-  StaticNews StaticNews[]
+  id   Int    @id @default(autoincrement())
+  name String
+
+  News News[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -32,58 +32,9 @@ model Categories {
 }
 
 model News {
-  id         Int        @id @default(autoincrement())
-  title      String
-  url        String
-  quote      String?
-  status     Status     @default(UNEXPORTED)
-  Category   Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  categoryId Int        @map("category_id")
-  userId     String
-  createdAt  DateTime   @default(now()) @map("created_at")
-  updatedAt  DateTime   @updatedAt @map("updated_at")
-
-  @@map("news")
-}
-
-model Contents {
-  id        Int      @id @default(autoincrement())
-  title     String
-  url       String
-  quote     String?
-  status    Status   @default(UNEXPORTED)
-  userId    String   @map("user_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("contents")
-}
-
-model Images {
-  id        String    @id @default(uuid(7))
-  status    Status    @default(UNEXPORTED)
-  userId    String    @map("user_id")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
-
-  contentType String @map("content_type") // e.g.: image/jpeg, image/png
-  fileSize    Int?   @map("file_size") // byte
-  width       Int? // pixel
-  height      Int? // pixel
-
-  tags        String[] @default([])
-  description String?
-
-  @@map("images")
-}
-
-// Viewer
-
-model StaticNews {
-  id    Int     @default(autoincrement())
-  url   String  @id @unique
+  id    Int     @id @default(autoincrement())
   title String
+  url   String  @unique
   quote String?
 
   ogImageUrl    String? @map("og_image_url")
@@ -93,11 +44,53 @@ model StaticNews {
   Category   Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   categoryId Int        @map("category_id")
 
+  status Status @default(UNEXPORTED)
+
+  userId String
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("st_news")
+  @@map("news")
 }
+
+model Contents {
+  id    Int     @id @default(autoincrement())
+  title String
+  url   String
+  quote String?
+
+  status Status @default(UNEXPORTED)
+
+  userId String @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("contents")
+}
+
+model Images {
+  id          String   @id @default(uuid(7))
+  contentType String   @map("content_type") // e.g.: image/jpeg, image/png
+  fileSize    Int?     @map("file_size") // byte
+  width       Int? // pixel
+  height      Int? // pixel
+  tags        String[] @default([])
+  description String?
+
+  status Status @default(UNEXPORTED)
+
+  userId String @map("user_id")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("images")
+}
+
+// Viewer
 
 model StaticContents {
   title           String @id @unique
