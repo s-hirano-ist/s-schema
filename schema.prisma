@@ -9,11 +9,8 @@ datasource db {
   // directUrl = env("POSTGRES_DIRECT_URL") // uses a direct connection // not needed for prisma postgresql database
 }
 
-// Dumper
-
 enum Status {
   UNEXPORTED
-  UPDATED_RECENTLY
   EXPORTED
 }
 
@@ -25,7 +22,8 @@ model Categories {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  userId    String   @map("user_id")
+
+  userId String @map("user_id")
 
   @@unique([name, userId])
   @@map("categories")
@@ -46,26 +44,27 @@ model News {
 
   status Status @default(UNEXPORTED)
 
-  userId String
+  userId String @map("user_id")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  exportedAt DateTime? @map("exported_at")
 
   @@map("news")
 }
 
 model Contents {
-  id    Int     @id @default(autoincrement())
-  title String
-  url   String
-  quote String?
+  id       Int    @id @default(autoincrement())
+  title    String @unique
+  markdown String
 
   status Status @default(UNEXPORTED)
 
   userId String @map("user_id")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  exportedAt DateTime? @map("exported_at")
 
   @@map("contents")
 }
@@ -83,27 +82,14 @@ model Images {
 
   userId String @map("user_id")
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  exportedAt DateTime? @map("exported_at")
 
   @@map("images")
 }
 
-// Viewer
-
-model StaticContents {
-  title           String @id @unique
-  markdown        String
-  uint8ArrayImage Bytes // only a few KBs so not much performance loss
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("st_contents")
-}
-
-model StaticBooks {
+model Books {
   ISBN  String @id @unique @map("isbn")
   title String
 
@@ -119,25 +105,13 @@ model StaticBooks {
   rating Int? // 1-5
   tags   String[] @default([])
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  status Status @default(UNEXPORTED)
 
-  @@map("st_books")
-}
+  userId String @map("user_id")
 
-model StaticImages {
-  id String @id @default(uuid(7))
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  exportedAt DateTime? @map("exported_at")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  contentType String @map("content_type") // e.g.: image/jpeg, image/png
-  fileSize    Int?   @map("file_size") // byte
-  width       Int? // pixel
-  height      Int? // pixel
-
-  tags        String[] @default([])
-  description String?
-
-  @@map("st_images")
+  @@map("books")
 }
