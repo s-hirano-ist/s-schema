@@ -32,7 +32,7 @@ model Categories {
 model News {
   id    Int     @id @default(autoincrement())
   title String
-  url   String  @unique
+  url   String
   quote String?
 
   ogImageUrl    String? @map("og_image_url")
@@ -50,6 +50,7 @@ model News {
   updatedAt  DateTime  @updatedAt @map("updated_at")
   exportedAt DateTime? @map("exported_at")
 
+  @@unique([url, userId])
   @@map("news")
 }
 
@@ -66,6 +67,7 @@ model Contents {
   updatedAt  DateTime  @updatedAt @map("updated_at")
   exportedAt DateTime? @map("exported_at")
 
+  @@unique([title, userId])
   @@map("contents")
 }
 
@@ -113,5 +115,6 @@ model Books {
   updatedAt  DateTime  @updatedAt @map("updated_at")
   exportedAt DateTime? @map("exported_at")
 
+  @@unique([ISBN, userId])
   @@map("books")
 }
