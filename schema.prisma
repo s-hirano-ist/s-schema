@@ -30,7 +30,7 @@ model Categories {
 }
 
 model News {
-  id    Int     @id @default(autoincrement())
+  id    String  @id @default(uuid(7))
   title String
   url   String
   quote String?
@@ -55,7 +55,7 @@ model News {
 }
 
 model Contents {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(uuid(7))
   title    String
   markdown String
 
@@ -93,7 +93,8 @@ model Images {
 }
 
 model Books {
-  ISBN  String @id @map("isbn")
+  id    String @id @default(uuid(7))
+  ISBN  String @map("isbn")
   title String
 
   googleTitle       String   @map("google_title")
