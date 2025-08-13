@@ -15,7 +15,8 @@ enum Status {
 }
 
 model Categories {
-  id   Int    @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+
   name String
 
   News News[]
@@ -30,7 +31,8 @@ model Categories {
 }
 
 model News {
-  id    String  @id @default(uuid(7))
+  id String @id @default(uuid(7))
+
   title String
   url   String
   quote String?
@@ -55,7 +57,8 @@ model News {
 }
 
 model Contents {
-  id       String @id @default(uuid(7))
+  id String @id @default(uuid(7))
+
   title    String
   markdown String
 
@@ -72,7 +75,9 @@ model Contents {
 }
 
 model Images {
-  id          String   @id @default(uuid(7))
+  id String @id @default(uuid(7))
+
+  paths       String
   contentType String   @map("content_type") // e.g.: image/jpeg, image/png
   fileSize    Int?     @map("file_size") // byte
   width       Int? // pixel
@@ -88,7 +93,7 @@ model Images {
   updatedAt  DateTime  @updatedAt @map("updated_at")
   exportedAt DateTime? @map("exported_at")
 
-  @@unique([id, userId])
+  @@unique([paths, userId])
   @@map("images")
 }
 
