@@ -15,7 +15,7 @@ enum Status {
 }
 
 model Categories {
-  id Int @id @default(autoincrement())
+  id String @id
 
   name String
 
@@ -31,7 +31,7 @@ model Categories {
 }
 
 model News {
-  id String @id @default(uuid(7))
+  id String @id
 
   title String
   url   String
@@ -42,9 +42,9 @@ model News {
   ogDescription String? @map("og_description")
 
   Category   Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  categoryId Int        @map("category_id")
+  categoryId String     @map("category_id")
 
-  status Status @default(UNEXPORTED)
+  status Status
 
   userId String @map("user_id")
 
@@ -57,12 +57,12 @@ model News {
 }
 
 model Contents {
-  id String @id @default(uuid(7))
+  id String @id
 
   title    String
   markdown String
 
-  status Status @default(UNEXPORTED)
+  status Status
 
   userId String @map("user_id")
 
@@ -75,17 +75,17 @@ model Contents {
 }
 
 model Images {
-  id String @id @default(uuid(7))
+  id String @id
 
   paths       String
   contentType String   @map("content_type") // e.g.: image/jpeg, image/png
   fileSize    Int?     @map("file_size") // byte
   width       Int? // pixel
   height      Int? // pixel
-  tags        String[] @default([])
+  tags        String[]
   description String?
 
-  status Status @default(UNEXPORTED)
+  status Status
 
   userId String @map("user_id")
 
@@ -98,23 +98,23 @@ model Images {
 }
 
 model Books {
-  id    String @id @default(uuid(7))
+  id    String @id
   ISBN  String @map("isbn")
   title String
 
-  googleTitle       String   @map("google_title")
-  googleSubTitle    String   @map("google_subtitle")
+  googleTitle       String?  @map("google_title")
+  googleSubTitle    String?  @map("google_subtitle")
   googleAuthors     String[] @map("google_authors")
-  googleDescription String   @map("google_description")
-  googleImgSrc      String   @map("google_img_src")
-  googleHref        String   @map("google_href")
+  googleDescription String?  @map("google_description")
+  googleImgSrc      String?  @map("google_img_src")
+  googleHref        String?  @map("google_href")
 
-  markdown String
+  markdown String?
 
   rating Int? // 1-5
-  tags   String[] @default([])
+  tags   String[]
 
-  status Status @default(UNEXPORTED)
+  status Status
 
   userId String @map("user_id")
 
