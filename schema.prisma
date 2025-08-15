@@ -77,7 +77,7 @@ model Contents {
 model Images {
   id String @id
 
-  paths       String
+  path        String
   contentType String   @map("content_type") // e.g.: image/jpeg, image/png
   fileSize    Int?     @map("file_size") // byte
   width       Int? // pixel
@@ -93,7 +93,7 @@ model Images {
   updatedAt  DateTime  @updatedAt @map("updated_at")
   exportedAt DateTime? @map("exported_at")
 
-  @@unique([paths, userId])
+  @@unique([path, userId])
   @@map("images")
 }
 
