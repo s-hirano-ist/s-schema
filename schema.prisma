@@ -14,12 +14,12 @@ enum Status {
   EXPORTED
 }
 
-model Categories {
+model Category {
   id String @id
 
   name String
 
-  News News[]
+  Articles Article[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -30,7 +30,7 @@ model Categories {
   @@map("categories")
 }
 
-model News {
+model Article {
   id String @id
 
   title String
@@ -41,8 +41,8 @@ model News {
   ogTitle       String? @map("og_title")
   ogDescription String? @map("og_description")
 
-  Category   Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  categoryId String     @map("category_id")
+  Category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoryId String   @map("category_id")
 
   status Status
 
@@ -53,10 +53,10 @@ model News {
   exportedAt DateTime? @map("exported_at")
 
   @@unique([url, userId])
-  @@map("news")
+  @@map("articles")
 }
 
-model Contents {
+model Note {
   id String @id
 
   title    String
@@ -71,10 +71,10 @@ model Contents {
   exportedAt DateTime? @map("exported_at")
 
   @@unique([title, userId])
-  @@map("contents")
+  @@map("notes")
 }
 
-model Images {
+model Image {
   id String @id
 
   path        String
@@ -97,7 +97,7 @@ model Images {
   @@map("images")
 }
 
-model Books {
+model Book {
   id    String @id
   ISBN  String @map("isbn")
   title String
