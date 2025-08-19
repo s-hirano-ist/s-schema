@@ -21,7 +21,7 @@ model Category {
 
   Articles Article[]
 
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt DateTime @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   userId String @map("user_id")
@@ -48,7 +48,7 @@ model Article {
 
   userId String @map("user_id")
 
-  createdAt  DateTime  @default(now()) @map("created_at")
+  createdAt  DateTime  @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
   exportedAt DateTime? @map("exported_at")
 
@@ -66,7 +66,7 @@ model Note {
 
   userId String @map("user_id")
 
-  createdAt  DateTime  @default(now()) @map("created_at")
+  createdAt  DateTime  @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
   exportedAt DateTime? @map("exported_at")
 
@@ -89,7 +89,7 @@ model Image {
 
   userId String @map("user_id")
 
-  createdAt  DateTime  @default(now()) @map("created_at")
+  createdAt  DateTime  @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
   exportedAt DateTime? @map("exported_at")
 
@@ -118,7 +118,7 @@ model Book {
 
   userId String @map("user_id")
 
-  createdAt  DateTime  @default(now()) @map("created_at")
+  createdAt  DateTime  @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
   exportedAt DateTime? @map("exported_at")
 
